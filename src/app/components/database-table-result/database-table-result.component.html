@@ -1,0 +1,11 @@
+<table mat-table [dataSource]="dataSource">
+  <ng-container *ngIf="table.rows.length > 0">
+    <ng-container *ngFor="let column of ObjectKeys(table.rows[0])" [matColumnDef]="column">
+      <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+      <td mat-cell *matCellDef="let row"> {{row[column] === null ? 'null' : row[column]}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="ObjectKeys(table.rows[0])"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns:ObjectKeys(table.rows[0])"></tr>
+  </ng-container>
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

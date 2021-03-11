@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-header>
+    <p *ngIf="formMode === FormMode.CREATE">Add Server</p>
+    <p *ngIf="formMode === FormMode.EDIT">Edit Server {{data.server?.name}}</p>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <form [formGroup]="form">
+      <mat-form-field appearance="legacy">
+        <mat-label>Name: </mat-label>
+        <input matInput [formControlName]="'name'">
+        <mat-hint class="color-error" *ngIf="(!form.controls['name'].valid) && form.controls['name'].touched">Name must be correctly filled</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="legacy">
+        <mat-label>IP: </mat-label>
+        <input matInput [mask]="'IP'" [dropSpecialCharacters]="false" [formControlName]="'ip'">
+        <mat-hint class="color-error" *ngIf="(!form.controls['ip'].valid) && form.controls['ip'].touched">
+          {{form.controls['ip'] | debug}}
+          <p *ngIf="form.controls['ip'].errors.invalid">This IP address is invalid</p>
+          <p *ngIf="form.controls['ip'].errors.empty">IP address must be correctly filled</p>
+        </mat-hint>
+      </mat-form-field >
+      <mat-form-field appearance="legacy">
+        <mat-label>Port: </mat-label>
+        <input matInput [formControlName]="'port'">
+        <mat-hint class="color-error" *ngIf="(!form.controls['port'].valid) && form.controls['port'].touched">Port must be correctly filled</mat-hint>
+      </mat-form-field >
+      <mat-form-field appearance="legacy">
+        <mat-label>Username: </mat-label>
+        <input matInput [formControlName]="'username'">
+        <mat-hint class="color-error" *ngIf="(!form.controls['username'].valid) && form.controls['username'].touched">Username must be correctly filled</mat-hint>
+      </mat-form-field>
+    </form>
+
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions class="flex-row">
+    <button mat-button color="primary" (click)="onAddClick()">{{formMode === FormMode.CREATE ? 'Add' : 'Save'}}</button>
+    <mat-divider vertical></mat-divider>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+  </mat-card-actions>
+</mat-card>

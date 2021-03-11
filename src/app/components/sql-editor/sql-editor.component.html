@@ -1,0 +1,59 @@
+
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened="true">
+    <!--
+    <mat-tree *ngIf="databases$ | async as databases" [treeControl]="treeControl">
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <button mat-icon-button disabled></button>
+        {{node.item}}
+      </mat-tree-node>
+      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <button mat-icon-button
+                [attr.aria-label]="'Toggle ' + node.item" matTreeNodeToggle>
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+        {{node.item}}
+        <mat-progress-bar *ngIf="node.isLoading"
+                          mode="indeterminate"
+                          class="example-tree-progress-bar"></mat-progress-bar>
+      </mat-tree-node>
+    </mat-tree>
+    -->
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="flex flex-row m-4">
+      <div class="flex flex-row mr-4">
+        <div>Font Size: </div>
+        <select [(ngModel)]="fontSize">
+          <option *ngFor="let option of fontSizeOptions" [value]="option">{{option}}</option>
+        </select>
+      </div>
+      <div class="flex flex-row mr-4">
+        <div>Theme: </div>
+        <select [(ngModel)]="theme" (ngModelChange)="logTheme()">
+          <option *ngFor="let option of themeOptions" [value]="option">{{option}}</option>
+        </select>
+      </div>
+    </div>
+    <td-code-editor
+      [style.height.px]="500"
+      editorStyle="border:0;"
+      flex
+      [theme]="theme"
+      language="sql"
+      [editorOptions]="{readOnly:false, fontSize:fontSize, matchBrackets:'near'}"
+      [(ngModel)]="code"
+      (ngModelChange)="onCodeChanged()">
+    </td-code-editor>
+    <button mat-button [color]="'primary'" (click)="execute()">Execute command</button>
+    <div *ngFor="let result of results">
+      <mat-error *ngIf="isInstanceOf(result, DatabaseErrorResult)">Error: {{result.errorMessage}} </mat-error>
+      <div *ngIf="isInstanceOf(result, DatabaseOkResult)">Ok: {{result.message}} </div>
+      <div *ngIf="isInstanceOf(result, DatabaseTableResult)">
+        <app-database-table-result [table]="result"></app-database-table-result>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

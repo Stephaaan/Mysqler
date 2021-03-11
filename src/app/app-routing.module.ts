@@ -2,14 +2,23 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './shared/components';
 
-import { HomeRoutingModule } from './home/home-routing.module';
-import { DetailRoutingModule } from './detail/detail-routing.module';
+import {DetailComponent} from "./detail/detail.component";
+import {ServersComponent} from "./components/servers/servers.component";
+import {SqlEditorComponent} from "./components/sql-editor/sql-editor.component";
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'servers',
     pathMatch: 'full'
+  },
+  {
+    path: 'servers',
+    component: ServersComponent,
+  },
+  {
+    path: 'editor',
+    component: SqlEditorComponent
   },
   {
     path: '**',
@@ -20,9 +29,8 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    HomeRoutingModule,
-    DetailRoutingModule
   ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
