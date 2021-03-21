@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-header><h4>Remove {{data.name}}</h4></mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <p>
+      Are you sure you want to remove <b>{{data.name}}</b>?
+    </p>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions class="flex-row">
+    <button mat-button color="warn" (click)="onYesClick()">Yes</button>
+    <mat-divider vertical></mat-divider>
+    <button mat-button (click)="onNoClick()">No</button>
+  </mat-card-actions>
+</mat-card>

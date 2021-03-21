@@ -1,0 +1,43 @@
+<div class="flex-row p-16">
+  <h3>Servers</h3>
+  <button mat-raised-button color="primary" (click)="addServer()">Add Server</button>
+</div>
+<div class="p-16">
+  <mat-grid-list cols="6" [rowHeight]="'1:2'" gutterSize="12" class="p-16" *ngIf="servers$ | async as servers">
+    <mat-grid-tile *ngFor="let server of servers" class="justify-center">
+      <mat-card class="card pointer" (click)="connectToServer(server)">
+        <mat-card-header><h4>{{server.name}}</h4></mat-card-header>
+        <mat-divider [inset]="4"></mat-divider>
+        <mat-card-content>
+          <div class="flex-row">
+            <p>IP Address:</p>
+            <p>{{server.ip}}</p>
+          </div>
+          <div class="flex-row">
+            <p>Port:</p>
+            <p>{{server.port}}</p>
+          </div>
+          <div class="flex-row">
+            <p>Username:</p>
+            <p>{{server.username}}</p>
+          </div>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions class="flex-row" (click)="stopPropagation($event)">
+          <div class="flex-row">
+            <button mat-icon-button aria-label="Edit" color="primary">
+              <mat-icon (click)="editServer(server)">edit</mat-icon>
+            </button>
+          </div>
+          <mat-divider [vertical]="true"></mat-divider>
+          <div class="flex-row">
+            <button mat-icon-button aria-label="Edit" color="warn" (click)="removeServer(server)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
