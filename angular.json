@@ -11,6 +11,12 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "customWebpackConfig": {
+              "path": "./MonacoPlugin.js",
+              "mergeStrategies": {
+                "module.rules": "prepend"
+              }
+            },
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -160,5 +166,8 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "analytics": "205202d6-ef59-45a2-bd61-22236fc3cc52"
   }
 }
