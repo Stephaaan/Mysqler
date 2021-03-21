@@ -24,7 +24,10 @@
             ],
             "scripts": [],
             "customWebpackConfig": {
-              "path": "./angular.webpack.js"
+              "path": "MonacoPlugin.js",
+              "mergeStrategies": {
+                "module.rules": "prepend"
+              }
             }
           },
           "configurations": {
