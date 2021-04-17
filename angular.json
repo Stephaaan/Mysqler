@@ -28,13 +28,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "customWebpackConfig": {
-              "path": "MonacoPlugin.js",
-              "mergeStrategies": {
-                "module.rules": "prepend"
-              }
-            }
+            "scripts": []
           },
           "configurations": {
             "dev": {

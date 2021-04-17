@@ -1,44 +1,60 @@
+  <div class="flex flex-row">
+    <!--databases sidebar-->
+    <div class="w-400 overflow-scroll">
+      <app-sidebar (onTableClick)="addTableToText($event)"></app-sidebar>
+    </div>
+    <!--editor-->
+    <div class="flex flex-col w-full">
+      <div class="flex flex-row m-4">
+        <div class="flex flex-row mr-4">
+          <div>Font Size: </div>
+          <select [(ngModel)]="editorOptions.fontSize">
+            <option *ngFor="let option of fontSizeOptions" [value]="option">{{option}}</option>
+          </select>
+        </div>
+        <div class="flex flex-row mr-4">
+          <div>Theme: </div>
+          <select [(ngModel)]="theme" (ngModelChange)="logTheme()">
+            <option *ngFor="let option of themeOptions" [value]="option">{{option}}</option>
+          </select>
+        </div>
+      </div>
+      <div style="height: 500px">
+        <!--
+          <td-code-editor
+              [style.height.px]="500"
+              editorStyle="border:0;"
+              isFullScreen="false"
+              [theme]="theme"
+              language="sql"
+              [editorOptions]="editorOptions"
+              [(ngModel)]="code"
+              (ngModelChange)="onCodeChanged()"
+            >
+            </td-code-editor> -->
+        <input  [(ngModel)]="code"
+                (ngModelChange)="onCodeChanged()"/>
+      </div>
+    </div>
+  </div>
 
-    <div class="flex flex-row m-4">
-      <div class="flex flex-row mr-4">
-        <div>Font Size: </div>
-        <select [(ngModel)]="editorOptions.fontSize">
-          <option *ngFor="let option of fontSizeOptions" [value]="option">{{option}}</option>
-        </select>
-      </div>
-      <div class="flex flex-row mr-4">
-        <div>Theme: </div>
-        <select [(ngModel)]="theme" (ngModelChange)="logTheme()">
-          <option *ngFor="let option of themeOptions" [value]="option">{{option}}</option>
-        </select>
-      </div>
-    </div>
-    <div style="height: 500px">
-      <td-code-editor
-        [style.height.px]="500"
-        editorStyle="border:0;"
-        isFullScreen="false"
-        [theme]="theme"
-        language="sql"
-        [editorOptions]="editorOptions"
-        [(ngModel)]="code"
-        (ngModelChange)="onCodeChanged()"
-      >
-      </td-code-editor>
-    </div>
 
     <button mat-button [color]="'primary'" (click)="execute()">Execute command</button>
-    <div *ngFor="let result of results">
-      <mat-error *ngIf="isInstanceOf(result, DatabaseErrorResult)">
-        <app-database-one-line-result type="ERROR">
-          Error: {{result.errorMessage}}
-        </app-database-one-line-result>
-      </mat-error>
-      <div *ngIf="isInstanceOf(result, DatabaseOkResult)">
-        <app-database-one-line-result type="OK">
-          Ok: {{result.message}}
-        </app-database-one-line-result>
-      <div *ngIf="isInstanceOf(result, DatabaseTableResult)">
-        <app-database-table-result [table]="result"></app-database-table-result>
+    <div  lass="overflow-scroll">
+      <div *ngFor="let result of results">
+        <div *ngIf="isInstanceOf(result, DatabaseTableResult)">
+          <app-database-table-result [table]="result"></app-database-table-result>
+        </div>
+        <mat-error *ngIf="isInstanceOf(result, DatabaseErrorResult)">
+          <app-database-one-line-result type="ERROR">
+            Error: {{result.errorMessage}}
+          </app-database-one-line-result>
+        </mat-error>
+        <div *ngIf="isInstanceOf(result, DatabaseOkResult)">
+          <app-database-one-line-result type="OK">
+            <p *ngIf="result.message === ''; else elseblock">Ok</p>
+            <ng-template #elseblock>Ok: {{result.message}}</ng-template>
+          </app-database-one-line-result>
+       </div>
       </div>
     </div>

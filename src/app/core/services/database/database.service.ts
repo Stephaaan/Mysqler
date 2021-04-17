@@ -5,6 +5,7 @@ import {bindNodeCallback, Observable, of} from "rxjs";
 import {fromPromise} from "rxjs/internal-compatibility";
 import {Router} from "@angular/router";
 import {map, tap} from "rxjs/operators";
+import {RowDataPacket} from "../../../models/RowDataPacket.model";
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,28 @@ export class DatabaseService {
       return rsp[0];
     }));
   };
+  public getDatabases(): Observable<{db: string, tables:string[]}[]> {
+    const knex = createKnexConnection(this.selectedServer);
+    const databases = knex.schema.raw("SHOW DATABASES")
+      .then(rsp => {
+        return rsp[0];
+      })
+
+    const tables = databases.then(rsp => {
+      const promises = rsp.map(item => {
+        return knex.schema.raw("USE " + item['Database'] +"; SHOW TABLES").then(
+          rsp => {
+            return ({db: item['Database'], tables: rsp[0][1].map(item => {
+              return item[Object.keys(item)[0]]
+            })})
+          }
+        )
+      })
+      return Promise.all(promises)
+    })
+
+    return fromPromise<{db: string, tables:string[]}[]>(tables)
+  }
   public saveCodeToLocalStorage(code: string){
     localStorage.setItem(this.CODE_KEY + '.' + this.selectedServer.id, code);
   }

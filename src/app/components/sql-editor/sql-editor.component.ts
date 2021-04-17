@@ -88,6 +88,9 @@ export class SqlEditorComponent implements OnInit {
   logTheme(){
     console.log(this.theme)
   }
-
+  addTableToText(table: string){
+    this.code += table;
+    this.onCodeChanged();
+  }
 }
 
