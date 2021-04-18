@@ -1,0 +1,8 @@
+<div [formGroup]="form" class="flex flex-col">
+  <div class="flex flex-row table-editor-border p-16" *ngFor="let group of rows.controls" [formGroup]="group">
+    <input matInput type="text" [errorStateMatcher]="matcher" [formControl]="group.get('name')"/>
+    <mat-error *ngIf="group.get('name').hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+  </div>
+</div>

@@ -44,6 +44,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import { DatabaseTableResultComponent } from './components/database-table-result/database-table-result.component';
 import { DatabaseOneLineResultComponent } from './components/database-one-line-result/database-one-line-result.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { TableEditorComponent } from './components/table-editor/table-editor.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -51,7 +52,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, DetailComponent, ServersComponent, RemoveServerDialogComponent, AddServerDialogComponent, ConnectPasswordDialogComponent, DatabasesSelectorComponent, SqlEditorComponent, DatabaseTableResultComponent, DatabaseOneLineResultComponent, SidebarComponent],
+  declarations: [AppComponent, DetailComponent, ServersComponent, RemoveServerDialogComponent, AddServerDialogComponent, ConnectPasswordDialogComponent, DatabasesSelectorComponent, SqlEditorComponent, DatabaseTableResultComponent, DatabaseOneLineResultComponent, SidebarComponent, TableEditorComponent],
   imports: [
     BrowserModule,
     FormsModule,
